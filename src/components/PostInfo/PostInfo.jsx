@@ -1,6 +1,7 @@
 import React from 'react';
-import '../UserInfo/UserInfo.scss';
-import '../CommentInfo/CommentInfo.scss';
+import './PostInfo.scss';
+import { UserInfo } from '../UserInfo';
+import { CommentList } from '../CommentList';
 
 export const PostInfo = ({ post }) => (
   <div className="PostInfo">
@@ -8,10 +9,8 @@ export const PostInfo = ({ post }) => (
       <h3 className="PostInfo__title">{post.title}</h3>
 
       <p>
-        {' Posted by  '}
-        <a className="UserInfo" href={`mailto:${post.user.email}`}>
-          {post.user.name}
-        </a>
+        {' Posted by '}
+        <UserInfo user={post.user} />
       </p>
     </div>
 
@@ -22,24 +21,7 @@ export const PostInfo = ({ post }) => (
     {post.comments.length === 0 ? (
       <b data-cy="NoCommentsMessage">No comments yet</b>
     ) : (
-      <div className="CommentList">
-        {post.comments.map(comment => (
-          <div className="CommentInfo" key={comment.id}>
-            <div className="CommentInfo__title">
-              <strong className="CommentInfo__name">{comment.name}</strong>
-              {' by '}
-              <a
-                className="CommentInfo__email"
-                href={`mailto:${comment.email}`}
-              >
-                {comment.email}
-              </a>
-            </div>
-
-            <div className="CommentInfo__body">{comment.body}</div>
-          </div>
-        ))}
-      </div>
+      <CommentList comments={post.comments} />
     )}
   </div>
 );
